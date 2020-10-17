@@ -1,0 +1,99 @@
+<ng-container *ngIf="data">
+  <h3>
+    <h2>
+      <i nz-icon nzType="container" nzTheme="outline"></i> &nbsp; Phiếu Thu
+      {{ id }} - {{ data.gomdon_ctime * 1000 | date: "HH:mm dd/MM/y" }}
+    </h2>
+  </h3>
+  <div class="content-header" nz-row nzJustify="space-between">
+    <div nz-col nzMd="16" nzXs="24">
+      <span class="paid">
+        <b>SÀN TRẢ:</b>&nbsp;<span class="money">{{
+          data.ecom_paid | number: "1.0-2"
+        }}</span>
+      </span>
+      &nbsp;-&nbsp;
+      <span class="exp">
+        <b>CÔNG NỢ:</b>&nbsp;<span class="money">{{
+          data.my_money | number: "1.0-2"
+        }}</span>
+      </span>
+      &nbsp;=&nbsp;
+      <span class="sum money">{{
+        data.ecom_paid - data.my_money | number: "1.0-2"
+      }}</span>
+
+      <nz-divider nzType="vertical"></nz-divider>
+      <textarea
+        style="width: 30%; margin-right: 10px;"
+        nz-input
+        [(ngModel)]="data.note"
+        placeholder="Ghi chú"
+        nzAutosize
+      ></textarea>
+      <nz-divider nzType="vertical"></nz-divider>
+      <app-action-button></app-action-button>
+    </div>
+    <div nz-col nzMd="8" nzXs="24">
+      <app-search-bar
+        [placeHolder]="'Tìm đơn bằng mã vận đơn, mã đơn hàng'"
+        (onSearchEvent)="searchOrder($event)"
+      ></app-search-bar>
+      <!-- <button nz-button nzType="primary">
+                    <i nz-icon nzType="plus" nzTheme="outline"></i>
+                  </button> -->
+    </div>
+  </div>
+  <div class="content-table" *ngIf="rows">
+    <ngx-datatable
+      class="datatable-cs"
+      [columnMode]="'force'"
+      [rows]="rows"
+      [columns]="cols"
+      [scrollbarV]="true"
+      [scrollbarH]="true"
+      [limit]="10"
+      [footerHeight]="50"
+      [rowHeight]="37"
+      [selected]="selected"
+      [selectionType]="'checkbox'"
+      [selectAllRowsOnPage]="false"
+      (select)="onSelect($event)"
+    >
+    </ngx-datatable>
+  </div>
+</ng-container>
+<ng-template
+  #linkRef
+  let-column="column"
+  let-row="row"
+  let-value="value"
+  let-i="i"
+>
+  <span>
+    <a
+      *ngIf="value; else notfound"
+      target="_blank"
+      href="{{ column.linkRef }}{{ row[column.key] }}"
+      >{{ value }}</a
+    >
+    <ng-template #notfound>Không tồn tại trên hệ thống</ng-template>
+  </span>
+</ng-template>
+<ng-template #moneyView let-row="row" let-value="value" let-i="i">
+  <span class="money">{{ value | number: "1.0-0" }}</span>
+</ng-template>
+
+<ng-template #sellerService let-row="row" let-value="value" let-i="i">
+  <span class="money">{{ value | number: "1.0-2" }} ({{ row.percent }}%)</span>
+</ng-template>
+
+<ng-template #dateView let-row="row" let-value="value" let-i="i">
+  <span>{{ value * 1000 | date: "dd/MM/y" }}</span>
+</ng-template>
+
+<ng-template #payMethod let-row="row" let-value="value" let-i="i">
+  <span title="{{ value | customString: 'PaymentMethod' }}">{{
+    value | customString: "PaymentMethod"
+  }}</span>
+</ng-template>

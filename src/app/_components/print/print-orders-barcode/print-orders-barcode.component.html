@@ -1,0 +1,23 @@
+<ng-container *ngIf="data">
+  <div
+    class="order"
+    *ngFor="let item of data; let i = index"
+    style="width: 200px; display: inline-block; margin-left: -4px;"
+    [style.margin-top]="i > 0 ? '5px' : '0'"
+  >
+    <svg id="barcode-{{ i }}"></svg>
+    <div
+      class="info"
+      style="
+        display: block;
+        margin-top: 3px;
+        font-size: 12px;
+        text-align: center;
+      "
+    >
+      {{ item.actual_carrier | customString: "ShortCarrier" }}
+      [{{ item.order_items.length }}]
+      {{ item.buyer_user.user_name | slice: 0:15 }}
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,145 @@
+<ng-container *ngIf="file; else upload">
+  <div class="content-header" nz-row nzJustify="space-between">
+    <div nz-col nzMd="18" nzXs="24">
+      <i
+        style="cursor: pointer;"
+        (click)="reload()"
+        nz-icon
+        nzType="arrow-left"
+        nzTheme="outline"
+        title="Quay lại trang tải file"
+      ></i>
+      <nz-divider nzType="vertical"></nz-divider>
+      <span class="paid">
+        <b>SÀN TRẢ:</b>&nbsp;<span class="money">{{
+          paid | number: "1.0-2"
+        }}</span>
+      </span>
+      &nbsp;-&nbsp;
+      <span class="exp">
+        <b>CÔNG NỢ:</b>&nbsp;<span class="money">{{
+          moneyExp | number: "1.0-2"
+        }}</span>
+      </span>
+      &nbsp;=&nbsp;
+      <span class="sum money">{{ paid - moneyExp | number: "1.0-2" }}</span>
+
+      <nz-divider nzType="vertical"></nz-divider>
+      <textarea
+        style="width: 30%; margin-right: 10px;"
+        nz-input
+        [(ngModel)]="note"
+        placeholder="Ghi chú"
+        nzAutosize
+      ></textarea>
+      <button
+        nz-button
+        nzType="default"
+        nz-tooltip
+        nzTooltipTitle="Tạo phiếu thu để ghi nhận các giao dịch này"
+        [disabled]="dis"
+        (click)="createReceipt()"
+      >
+        <i nz-icon nzType="plus"></i> Tạo Phiếu Thu
+      </button>
+      <nz-divider nzType="vertical"></nz-divider>
+      <app-action-button></app-action-button>
+    </div>
+    <div nz-col nzMd="6" nzXs="24">
+      <div nz-row nzJustify="end">
+        <nz-divider [hidden]="mobile" nzType="vertical"></nz-divider>
+        <div nz-col nzMd="12" nzXs="24">
+          <app-search-bar
+            [placeHolder]="'Tìm đơn bằng mã vận đơn, mã đơn hàng'"
+            (onSearchEvent)="searchOrder($event)"
+          ></app-search-bar>
+          <!-- <button nz-button nzType="primary">
+                <i nz-icon nzType="plus" nzTheme="outline"></i>
+              </button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-table" *ngIf="rows">
+    <ngx-datatable
+      class="datatable-cs"
+      [columnMode]="'force'"
+      [rows]="rows"
+      [columns]="columns"
+      [scrollbarV]="true"
+      [scrollbarH]="true"
+      [limit]="10"
+      [footerHeight]="50"
+      [rowHeight]="37"
+      [selected]="selected"
+      [selectionType]="'checkbox'"
+      [selectAllRowsOnPage]="false"
+      (select)="onSelect($event)"
+    >
+    </ngx-datatable>
+  </div>
+</ng-container>
+<ng-template #upload>
+  <div nz-row nzJustify="center" nzAlign="middle" style="height: 53vh;">
+    <div nz-col nzXs="24" nzMd="10" class="upload-area">
+      <nz-upload
+        nzType="drag"
+        nzFileAccept=".xlsx, .xls, .csv"
+        [nzMultiple]="false"
+        (nzChange)="handleChange($event)"
+      >
+        <p class="ant-upload-drag-icon">
+          <img src="assets/money.png" alt="" />
+        </p>
+        <p class="ant-upload-text">
+          KÉO THẢ FILE Excel/CSV CỦA BẠN HOẶC CLICK VÀO ĐÂY
+        </p>
+
+        <p class="ant-upload-hint">
+          Đây là file chứa các giao dịch sàn TMĐT trả cho mỗi đơn hàng, được
+          định dạng, sắp xếp các cột theo thứ tự:
+        </p>
+        <input class="header-ip" nz-input [(ngModel)]="headers" />
+        <nz-alert
+          style="margin: 5px 36px;"
+          nzType="warning"
+          nzMessage="Trong file excel phải chứa thông tin lần rút tiền để đối soát các đơn ở giữa 2 lần rút tiền đó."
+        ></nz-alert>
+      </nz-upload>
+    </div>
+  </div>
+</ng-template>
+<ng-template
+  #linkRef
+  let-column="column"
+  let-row="row"
+  let-value="value"
+  let-i="i"
+>
+  <span>
+    <a
+      *ngIf="value; else notfound"
+      target="_blank"
+      href="{{ column.linkRef }}{{ row[column.key] }}"
+      >{{ value }}</a
+    >
+    <ng-template #notfound>Không tồn tại trên hệ thống</ng-template>
+  </span>
+</ng-template>
+<ng-template #moneyView let-row="row" let-value="value" let-i="i">
+  <span class="money">{{ value | number: "1.0-0" }}</span>
+</ng-template>
+
+<ng-template #sellerService let-row="row" let-value="value" let-i="i">
+  <span class="money">{{ value | number: "1.0-2" }} ({{ row.percent }}%)</span>
+</ng-template>
+
+<ng-template #dateView let-row="row" let-value="value" let-i="i">
+  <span>{{ value * 1000 | date: "dd/MM/y" }}</span>
+</ng-template>
+
+<ng-template #payMethod let-row="row" let-value="value" let-i="i">
+  <span title="{{ value | customString: 'PaymentMethod' }}">{{
+    value | customString: "PaymentMethod"
+  }}</span>
+</ng-template>

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "ctvbanhang-a398d": {
+      "hosting": {
+        "gomdon-v2": [
+          "ctvbanhang-a398d"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "ctvbanhang-a398d"
+  }
+}

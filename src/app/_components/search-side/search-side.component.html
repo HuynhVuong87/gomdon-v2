@@ -1,0 +1,107 @@
+<div nz-row nzGutter="16">
+  <div nz-col nzXs="24" nzMd="6">
+    <textarea
+      #inpt
+      style="text-transform: uppercase"
+      nz-input
+      placeholder="Tìm theo mã vận đơn, cách nhau bằng xuống dòng"
+      [nzAutosize]="{ minRows: 3 }"
+      [(ngModel)]="searchText"
+      (ngModelChange)="textChange()"
+    ></textarea>
+    <div
+      nz-row
+      nzJustify="end"
+      *ngIf="searchMulti.length > 0"
+      style="margin-top: 10px"
+    >
+      <button nz-button nzType="primary" (click)="searchMultiAtc()">
+        <i nz-icon nzType="search"></i>Tìm kiếm
+      </button>
+    </div>
+    <nz-list class="suggest" nzItemLayout="horizontal" [nzLoading]="loading">
+      <nz-list-item *ngFor="let item of list_suggest">
+        <nz-list-item-meta
+          nzAvatar="assets/logo.svg"
+          [nzDescription]="item.order_sn"
+        >
+          <nz-list-item-meta-title>
+            <a
+              class="mvd"
+              title="Mã Vận Đơn"
+              href="/order/{{ item.order_sn }}"
+              target="_blank"
+              >{{ item.shipping_traceno }}</a
+            >
+          </nz-list-item-meta-title>
+        </nz-list-item-meta>
+      </nz-list-item>
+      <nz-list-empty
+        *ngIf="list_suggest && list_suggest.length === 0"
+      ></nz-list-empty>
+    </nz-list>
+  </div>
+  <div nz-col nzXs="24" nzMd="18">
+    <ng-container *ngIf="rows.length > 0; else empt">
+      <app-action-button></app-action-button>
+      <br />
+      <ngx-datatable
+        class="datatable-cs"
+        [columnMode]="'force'"
+        [rows]="rows"
+        [columns]="cols"
+        [scrollbarV]="true"
+        [scrollbarH]="true"
+        [limit]="10"
+        [footerHeight]="50"
+        [rowHeight]="37"
+        [selected]="selected"
+        [selectionType]="'checkbox'"
+        [selectAllRowsOnPage]="false"
+        (select)="onSelect($event)"
+      >
+      </ngx-datatable>
+    </ng-container>
+    <ng-template #empt>
+      <img
+        style="width: 60%; margin: 0 auto; display: block; margin-top: 70px"
+        src="assets/search.svg"
+        alt=""
+      />
+    </ng-template>
+  </div>
+</div>
+<ng-template
+  #linkRef
+  let-column="column"
+  let-row="row"
+  let-value="value"
+  let-i="i"
+>
+  <span>
+    <a
+      *ngIf="value; else notfound"
+      target="_blank"
+      href="{{ column.linkRef }}{{ row[column.key] }}"
+      >{{ value }}</a
+    >
+    <ng-template #notfound>Không tồn tại trên hệ thống</ng-template>
+  </span>
+</ng-template>
+<ng-template #moneyView let-row="row" let-value="value" let-i="i">
+  <span class="money">{{ value | number: "1.0-0" }}</span>
+</ng-template>
+
+<ng-template #sellerService let-row="row" let-value="value" let-i="i">
+  <span class="money">{{ value | number: "1.0-2" }} ({{ row.percent }}%)</span>
+</ng-template>
+
+<ng-template #dateView let-row="row" let-value="value" let-i="i">
+  <span>{{ value * 1000 | date: "dd/MM/y" }}</span>
+</ng-template>
+
+<ng-template #payMethod let-row="row" let-value="value" let-i="i">
+  <span title="{{ value | customString: 'PaymentMethod' }}">{{
+    value | customString: "PaymentMethod"
+  }}</span>
+</ng-template>

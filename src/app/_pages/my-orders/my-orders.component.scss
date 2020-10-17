@@ -1,0 +1,14 @@
+.thongke {
+  width: fit-content;
+  position: fixed;
+  bottom: 40px;
+  right: 0;
+  padding: 10px 20px;
+  background: #fff;
+  border-radius: 10px 0 0 10px;
+  box-shadow: -2px 0 20px rgba(162, 104, 255, 0.363);
+
+  i {
+    cursor: pointer;
+  }
+}

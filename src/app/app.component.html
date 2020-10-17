@@ -1,0 +1,83 @@
+<ng-container *ngIf="ready; else loading">
+  <ng-container *ngIf="needLogin">
+    <app-login style="width: 100%; height: 100vh;"></app-login>
+  </ng-container>
+  <ng-container *ngIf="needLogin === false">
+    <nz-layout class="app-layout">
+      <nz-sider
+        *ngIf="!mobile"
+        class="menu-sidebar"
+        nzCollapsible
+        nzWidth="12%"
+        [class.collap]="isCollapsed"
+        nzBreakpoint="md"
+        [(nzCollapsed)]="isCollapsed"
+        [nzTrigger]="null"
+        (nzCollapsedChange)="collapsedF($event)"
+      >
+        <div class="sidebar-logo">
+          <a [routerLink]="['/']" target="_blank">
+            <img src="assets/logo.svg" alt="logo" />
+            <h1>Gom Đơn 2.0</h1>
+          </a>
+        </div>
+        <ul
+          nz-menu
+          nzTheme="dark"
+          nzMode="inline"
+          [nzInlineCollapsed]="isCollapsed"
+        >
+          <app-menu-side></app-menu-side>
+        </ul>
+        <h4 id="version">GomDon2.0 @2020</h4>
+      </nz-sider>
+      <nz-layout>
+        <nz-header>
+          <div class="app-header" nz-row nzJustify="space-between">
+            <span
+              *ngIf="!mobile; else mbnavi"
+              class="header-trigger"
+              (click)="isCollapsed = !isCollapsed"
+            >
+              <i
+                class="trigger"
+                nz-icon
+                [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+              ></i>
+            </span>
+
+            <ng-template #mbnavi>
+              <span class="header-trigger" (click)="visibleMBSide = true">
+                <i nz-icon nzType="menu" nzTheme="outline"></i>
+              </span>
+            </ng-template>
+            <app-header></app-header>
+          </div>
+        </nz-header>
+        <nz-content [ngStyle]="{ margin: mobile ? '10px' : '24px' }">
+          <div class="inner-content">
+            <router-outlet></router-outlet>
+          </div>
+        </nz-content>
+      </nz-layout>
+    </nz-layout>
+
+    <nz-drawer
+      [nzClosable]="false"
+      [nzVisible]="visibleMBSide"
+      [nzPlacement]="'left'"
+      (nzOnClose)="visibleMBSide = false"
+    >
+      <ul nz-menu nzTheme="light" nzMode="inline">
+        <app-menu-side></app-menu-side>
+      </ul>
+    </nz-drawer>
+  </ng-container>
+</ng-container>
+<ng-template #loading>
+  <img
+    style="margin: 0 auto; margin-top: 100px;"
+    src="assets/loading.gif"
+    alt=""
+  />
+</ng-template>

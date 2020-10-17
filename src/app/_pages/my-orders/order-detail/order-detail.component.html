@@ -1,0 +1,127 @@
+<ng-container *ngIf="sell; else empty">
+  <div nz-row>
+    <nz-steps class="timeline-status" nzSize="small">
+      <!-- [nzCurrent]="timelineStatus.current" -->
+      <ng-container *ngFor="let item of timelineStatus.statuses">
+        <nz-step
+          [nzTitle]="item.title"
+          [nzSubtitle]="item.time | date: 'HH:mm - dd/MM/y'"
+          nzDescription="{{ item.name }}"
+          [nzIcon]="iconTpl"
+          style="cursor: pointer;"
+          nz-popconfirm
+          [nzPopconfirmTrigger]="sell.gomdon_status == item.id ? null : 'click'"
+          nzPopconfirmTitle="Bạn có chắc chắn muốn đổi trạng thái sang {{
+            item.title
+          }}"
+          nzPopconfirmPlacement="bottom"
+          (nzOnConfirm)="changeStatus(item.id)"
+          [nzStatus]="sell.gomdon_status == item.id ? 'finish' : 'wait'"
+        ></nz-step>
+        <ng-template #iconTpl>
+          <i nz-icon [nzType]="item.icon" nzTheme="outline"></i>
+        </ng-template>
+      </ng-container>
+    </nz-steps>
+  </div>
+  <nz-divider style="margin: 15px 0 0 0;"></nz-divider>
+  <div nz-row nzGutter="24">
+    <div
+      nz-col
+      nzXs="24"
+      nzMd="11"
+      style="border-right: rgba(221, 221, 221, 0.25) solid 1px;"
+    >
+      <app-order-info-customer [sell]="sell"></app-order-info-customer>
+      <h4
+        class="sumary"
+        *ngIf="sell.gomdon_export_id && sell.gomdon_export_id.length > 0"
+      >
+        <i nz-icon nzType="container" nzTheme="outline"></i> Phiếu Xuất:
+        <a
+          href="/stock/export/{{ sell.gomdon_export_id }}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {{ sell.gomdon_export_id }}
+        </a>
+        <button (click)="viewPosition()" nz-button nzType="default">
+          Xem vị trí
+        </button>
+      </h4>
+      <h3 class="sumary">
+        <i nz-icon nzType="wallet" nzTheme="outline"></i> Doanh Thu
+      </h3>
+      <app-order-info-paid [sell]="sell"></app-order-info-paid>
+      <h3 class="sumary">
+        <i nz-icon nzType="form" nzTheme="outline"></i> Ghi Chú
+      </h3>
+      <br />
+      <textarea
+        nz-input
+        placeholder="Nhập ghi chú cho đơn này tại đây"
+        [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+        [(ngModel)]="sell.gomdon_note"
+        (ngModelChange)="disableSaveNote = false"
+      ></textarea>
+
+      <div nz-row nzJustify="end" style="margin-top: 10px;">
+        <button
+          nz-button
+          nzType="primary"
+          [disabled]="disableSaveNote"
+          (click)="saveNote()"
+        >
+          <i nz-icon nzType="save" nzTheme="outline"></i>Lưu ghi chú
+        </button>
+      </div>
+    </div>
+    <div nz-col nzXs="24" nzMd="13">
+      <!-- {{ sell.shipping_traceno }} -->
+      <app-order-info-items
+        [items]="sell.order_items"
+        [shop_id]="sell.shop_id"
+        [mobile]="mobile"
+      ></app-order-info-items>
+    </div>
+  </div>
+  <div class="logs">
+    <button
+      nz-button
+      (click)="openLogsView()"
+      style="border: #6c19f1 solid 1px; color: #5019b6;"
+    >
+      <i nz-icon nzType="line-chart" nzTheme="outline"></i> Lịch Sử
+    </button>
+  </div>
+
+  <nz-drawer
+    [nzVisible]="visibleLogsView"
+    nzPlacement="right"
+    nzTitle="Lịch sử biến động của đơn hàng {{ sell.order_sn }}"
+    (nzOnClose)="visibleLogsView = false"
+    [nzWidth]="mobile ? '85%' : '25%'"
+  >
+    <app-order-info-logs-detail [logs]="logsView"></app-order-info-logs-detail>
+  </nz-drawer>
+</ng-container>
+<ng-template #empty>
+  <ng-container *ngIf="notfound">
+    <nz-result
+      nzStatus="404"
+      nzTitle="404"
+      nzSubTitle="Trang bạn mở không tồn tại hoặc bạn không có quyền truy cập!"
+    >
+      <div nz-result-extra>
+        <button
+          nz-button
+          nzType="primary"
+          [routerLink]="['/']"
+          routerLinkActive="router-link-active"
+        >
+          Trang Chủ
+        </button>
+      </div>
+    </nz-result>
+  </ng-container>
+</ng-template>

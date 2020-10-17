@@ -1,0 +1,99 @@
+<h2>
+  <i nz-icon nzType="container" nzTheme="outline"></i> &nbsp; Phiếu Xuất
+  {{ id }}
+  <ng-container *ngIf="export">
+    - <b>{{ export.actual_carrier }} </b> - Tạo lúc:
+    {{ export.gomdon_ctime * 1000 | date: "HH:mm dd/MM/y" }}
+  </ng-container>
+</h2>
+<ng-container *ngIf="export; else empty">
+  <div class="content-header" nz-row nzJustify="space-between">
+    <div>
+      <nz-radio-group
+        [(ngModel)]="export_status"
+        nzButtonStyle="solid"
+        (ngModelChange)="changeStatus()"
+      >
+        <label nz-radio-button [nzValue]="1">Mới</label>
+        <label nz-radio-button [nzValue]="2">Đã Giao Đủ</label>
+        <label nz-radio-button [nzValue]="4">Đã Hủy</label>
+      </nz-radio-group>
+      <nz-divider nzType="vertical"></nz-divider>
+      <app-action-button></app-action-button>
+    </div>
+    <div nz-col nzMd="16" nzXs="24">
+      <div nz-row nzJustify="end">
+        <nz-select
+          nzPlaceHolder="Trạng Thái"
+          ngModel=""
+          (ngModelChange)="selectStatus($event)"
+        >
+          <nz-option nzValue="all" nzLabel="Tất Cả Trạng Thái"></nz-option>
+          <nz-option
+            *ngFor="let item of statusList"
+            [nzValue]="item"
+            [nzLabel]="item | customString: 'Sell' | uppercase"
+          ></nz-option>
+        </nz-select>
+        <nz-divider [hidden]="mobile" nzType="vertical"></nz-divider>
+
+        <div nz-col nzMd="12" nzXs="24">
+          <app-search-bar
+            [placeHolder]="'Tìm đơn bằng mã vận đơn, mã đơn hàng'"
+            (onSearchEvent)="searchOrder($event)"
+          ></app-search-bar>
+          <!-- <button nz-button nzType="primary">
+              <i nz-icon nzType="plus" nzTheme="outline"></i>
+            </button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-table">
+    <ngx-datatable
+      class="datatable-cs"
+      [columnMode]="'force'"
+      [rows]="rows"
+      [columns]="columns"
+      [scrollbarV]="true"
+      [scrollbarH]="true"
+      [limit]="10"
+      [footerHeight]="50"
+      [rowHeight]="37"
+      [selected]="selected"
+      [selectionType]="'checkbox'"
+      [selectAllRowsOnPage]="false"
+      (select)="onSelect($event)"
+    >
+    </ngx-datatable>
+  </div>
+</ng-container>
+<ng-template #empty>
+  <nz-empty style="margin-top: 100px;"></nz-empty>
+</ng-template>
+<ng-template
+  #linkRef
+  let-column="column"
+  let-row="row"
+  let-value="value"
+  let-i="i"
+>
+  <span
+    style="padding: 5px;"
+    [ngStyle]="{
+      background: column.key === 'gomdon_export_id' ? '#ffd9d7' : ''
+    }"
+    ><a target="_blank" href="{{ column.linkRef }}{{ row[column.key] }}">{{
+      value
+    }}</a></span
+  >
+</ng-template>
+<ng-template #moneyView let-row="row" let-value="value" let-i="i">
+  <span class="money">{{ value | number: "1.0-2" }}</span>
+</ng-template>
+<ng-template #statusView let-row="row" let-value="value" let-i="i">
+  <span class="status-{{ value }}">{{ value | customString: "Sell" }}</span>
+</ng-template>
+<ng-template #dateView let-row="row" let-value="value" let-i="i">
+  <span>{{ value * 1000 | date: "dd/MM/y" }}</span>
+</ng-template>

@@ -1,0 +1,120 @@
+<div *ngIf="tier_variations.length > 0">
+  <div class="tier" nz-row nzJustify="center" nzGutter="5">
+    <div nz-col nzSm="16" nzXs="24">
+      <div nz-row>
+        <ng-container *ngFor="let item of tier_variations; let i = index">
+          <div nz-col [nzSm]="6" [nzXs]="24">
+            <span class="label">Nhóm phân loại {{ i + 1 }}:</span>
+          </div>
+          <div nz-col [nzSm]="18" [nzXs]="24" class="models">
+            <div nz-row nzJustify="end">
+              <i
+                (click)="removeTier(i)"
+                class="remove-tier"
+                nz-icon
+                nzType="close"
+                nzTheme="outline"
+              ></i>
+            </div>
+            <input
+              id="tier-{{ i }}"
+              nz-input
+              [(ngModel)]="tier_variations[i].name"
+              [placeholder]="
+                i === 0
+                  ? 'Tên nhóm phân loại 1, ví dụ: Màu sắc, Kích thước, vv'
+                  : 'Tên nhóm phân loại 2, ví dụ: Size, vv'
+              "
+            />
+            <div
+              nz-row
+              *ngFor="
+                let model of item.options;
+                let ii = index;
+                trackBy: trackByFn
+              "
+            >
+              <nz-input-group [nzSuffix]="suffixIconAction">
+                <input
+                  id="option-{{ i }}-{{ ii }}"
+                  nz-input
+                  [(ngModel)]="item.options[ii]"
+                  (ngModelChange)="renderModelPreview($event, i + '-' + ii)"
+                  [placeholder]="
+                    i === 0
+                      ? 'Nhập phân loại hàng, ví dụ: Đỏ, Vàng,...'
+                      : 'Nhập phân loại hàng, ví dụ: S, M, L,...'
+                  "
+                />
+              </nz-input-group>
+              <ng-template #suffixIconAction>
+                <i
+                  *ngIf="item.options.length > 1"
+                  (click)="removeOption(i, ii)"
+                  nz-icon
+                  nzType="delete"
+                  nzTheme="outline"
+                ></i>
+              </ng-template>
+            </div>
+            <div nz-row>
+              <button
+                nz-button
+                nzType="dashed"
+                style="width: 100%"
+                (click)="addOption(i)"
+              >
+                <i nz-icon nzType="plus-circle" nzTheme="outline"></i> Thêm phân
+                loại hàng
+              </button>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div
+        nz-row
+        *ngIf="tier_variations.length < 2"
+        style="margin-bottom: 10px"
+      >
+        <button
+          (click)="addTier()"
+          nz-button
+          nzType="dashed"
+          style="width: 100%"
+        >
+          <i nz-icon nzType="plus" nzTheme="outline"></i> Thêm nhóm phân loại
+          hàng
+        </button>
+      </div>
+      <div *ngIf="models.length > 0" nz-row class="models-table">
+        <nz-table
+          #modelsTable
+          nzBordered
+          nzTitle="Bảng Phân Loại Hàng"
+          [nzData]="models"
+          [nzFrontPagination]="false"
+          [nzShowPagination]="false"
+          style="width: 100%"
+        >
+          <thead>
+            <tr>
+              <th>Tên</th>
+              <th>Giá</th>
+              <th>Tồn kho</th>
+              <th>SKU</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let opt of modelsTable.data">
+              <td>{{ opt.name }}</td>
+              <td>{{ opt.price }}</td>
+              <td>{{ opt.stock }}</td>
+              <td>{{ opt.sku }}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <button (click)="test()">test</button> -->

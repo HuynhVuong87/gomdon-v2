@@ -1,0 +1,13 @@
+#print-section {
+  /* hide the printing component from @media screen */
+  visibility: hidden;
+}
+
+@media print {
+  /* invert the display (show/hide) properties of the main */
+  /* aplication component and the printing component       */
+
+  #print-section {
+    display: block;
+  }
+}

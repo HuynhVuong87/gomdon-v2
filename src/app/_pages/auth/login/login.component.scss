@@ -1,0 +1,30 @@
+.bg {
+  height: 100%;
+  background-color: #f8f8f8;
+  .contain {
+    padding: 24px;
+    width: 20%;
+    background-color: #fff;
+    box-shadow: 0 5px 34px #eeeeee;
+    border-radius: 4px;
+    margin-right: 200px;
+  }
+}
+
+.login-form-margin {
+  margin-bottom: 16px;
+}
+
+.login-form-forgot {
+  float: right;
+}
+
+.login-form-button {
+  width: 100%;
+}
+
+img.logo {
+  width: 35%;
+  margin: 0 auto;
+  display: block;
+}

@@ -1,0 +1,21 @@
+<nz-alert
+  nzType="info"
+  nzMessage="Để thêm một kho mới bạn click vào biểu tượng tiện ích mở rộng GomDon 2.0 rồi 'nhập email chủ kho' để thêm nhé."
+></nz-alert>
+<nz-divider></nz-divider>
+<nz-radio-group [(ngModel)]="selectStock" *ngIf="list">
+  <ng-container *ngFor="let item of list">
+    <label nz-radio [nzValue]="item.uid">
+      <b>{{ item.displayName }}</b> - {{ item.email }}
+    </label>
+    <br />
+  </ng-container>
+</nz-radio-group>
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="destroyModal()">
+    Hủy
+  </button>
+  <button nz-button nzType="primary" (click)="save()" [disabled]="!selectStock">
+    <i nz-icon nzType="save" nzTheme="outline"></i> LƯU
+  </button>
+</div>

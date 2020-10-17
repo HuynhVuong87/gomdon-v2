@@ -1,0 +1,19 @@
+.timeline-status {
+  width: 90%;
+  margin: 0 auto;
+}
+h3.sumary {
+  border-top: #ddd dashed 1px;
+  padding-top: 10px;
+  margin-bottom: 0;
+  color: #2c007e;
+}
+.logs {
+  width: fit-content;
+  position: fixed;
+  right: 0;
+  padding: 10px;
+  background: #fff;
+  bottom: 50px;
+  box-shadow: -2px 0 10px #9142ff36;
+}

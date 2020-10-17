@@ -1,0 +1,45 @@
+<ngx-datatable
+  class="products-order datatable-cs"
+  [columnMode]="'force'"
+  [rows]="items"
+  [columns]="columns"
+  [scrollbarV]="false"
+  [scrollbarH]="false"
+  [limit]="10"
+  [footerHeight]="50"
+  [rowHeight]="'auto'"
+>
+</ngx-datatable>
+<ng-template #imgPrv let-row="row" let-value="value" let-rowIndex="rowIndex">
+  <img
+    class="in-cell"
+    width="30px"
+    src="{{ value }}"
+    alt=""
+    nz-popover
+    [nzPopoverContent]="imgPreview"
+    [nzPopoverPlacement]="mobile ? 'right' : 'left'"
+  />
+  <ng-template #imgPreview>
+    <img [style.width]="mobile ? '200px' : '400px'" src="{{ value }}" alt="" />
+  </ng-template>
+</ng-template>
+<ng-template #money let-row="row" let-value="value" let-rowIndex="rowIndex">
+  <span class="money">{{ value | number: "1.0-3" }}</span>
+</ng-template>
+<ng-template
+  #linkRef
+  let-column="column"
+  let-row="row"
+  let-value="value"
+  let-i="i"
+>
+  <span
+    ><a
+      [title]="value"
+      target="_blank"
+      href="https://shopee.vn/!-i.{{ shop_id }}.{{ row.product.item_id }}"
+      >{{ value }}</a
+    ></span
+  >
+</ng-template>

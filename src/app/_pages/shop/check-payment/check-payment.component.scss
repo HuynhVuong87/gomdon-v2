@@ -1,0 +1,30 @@
+.upload-area {
+  max-height: 200px;
+
+  .ant-input-affix-wrapper {
+    padding-right: 4px;
+  }
+
+  .ant-upload.ant-upload-drag {
+    border: 2px dashed #d9d9d9;
+    padding: 0 10px;
+  }
+
+  .header-ip {
+    width: 85%;
+    margin: 10px 0;
+    background: #103150;
+    color: #fff;
+    border-radius: 3px;
+  }
+
+  p.ant-upload-hint {
+    margin: 0 35px;
+  }
+}
+.content-header {
+  span.money {
+    font-size: 20px;
+    font-weight: 500;
+  }
+}

@@ -1,0 +1,36 @@
+<form
+  nz-form
+  [formGroup]="validateForm"
+  (ngSubmit)="submitForm()"
+  class="form-general"
+>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="product_name"
+      >Tên sản phẩm</nz-form-label
+    >
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="Tên sản phẩm quá ngắn. Bạn có thể thêm một số thông tin nổi bật, từ khóa"
+    >
+      <input nz-input formControlName="product_name" id="product_name" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="product_describe" nzRequired
+      >Mô tả</nz-form-label
+    >
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="Tối thiểu 100 kí tự, tối đa 3000 kí tự"
+    >
+      <textarea
+        nz-input
+        id="product_describe"
+        [nzAutosize]="{ minRows: 4 }"
+        formControlName="product_describe"
+      ></textarea>
+    </nz-form-control>
+  </nz-form-item>
+</form>

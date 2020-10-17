@@ -1,0 +1,17 @@
+<ng-container *ngIf="listBtns.length > 0">
+  <ng-container *ngFor="let item of listBtns">
+    <div style="display: inline-block;" [hidden]="item.hide ? true : false">
+      <button
+        nz-button
+        nzType="primary"
+        nzShape="circle"
+        nz-tooltip
+        [nzTooltipTitle]="item.title"
+        (click)="fireFunc(item.func)"
+      >
+        <i nz-icon [nzType]="item.icon"></i>
+      </button>
+      <nz-divider nzType="vertical"></nz-divider>
+    </div>
+  </ng-container>
+</ng-container>

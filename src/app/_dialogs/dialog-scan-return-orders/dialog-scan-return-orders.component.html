@@ -1,0 +1,56 @@
+<div nz-row>
+  <label nz-checkbox [(ngModel)]="auto" (ngModelChange)="changeAuto()"
+    >Xác nhận ngay sau khi nhập ( Dùng cho paste, máy đọc mã vạch)</label
+  >
+</div>
+<input
+  #inpt
+  style="margin: 10px 0;"
+  nz-input
+  placeholder="Nhập Mã Vận Đơn Tại Đây"
+  [(ngModel)]="value"
+  (keyup.enter)="checkOrder()"
+  [disabled]="disableInput"
+  (ngModelChange)="autoCheck()"
+/>
+<div nz-row nzJustify="space-between">
+  <i
+    ><i nz-icon nzType="exclamation-circle" nzTheme="outline"></i>&nbsp; Sau khi
+    nhập MVĐ, click xác nhận (enter)</i
+  >
+  <button
+    (click)="checkOrder()"
+    [disabled]="value === '' ? true : false"
+    nz-button
+    nzType="primary"
+  >
+    <i nz-icon nzType="check" nzTheme="outline"></i>Xác Nhận
+  </button>
+</div>
+<nz-divider style="margin: 20px 0 0 0;"></nz-divider>
+
+<div style="max-height: 50vh; overflow-y: scroll; padding-right: 10px;">
+  <nz-list>
+    <nz-list-item *ngFor="let item of list">
+      <h3>
+        <i nz-icon nzType="arrow-right" nzTheme="outline"></i>&nbsp;
+        {{ item.mvd }}
+        <a
+          *ngIf="item.id"
+          href="order/{{ item.id }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          ><i nz-icon nzType="link" nzTheme="outline"></i
+        ></a>
+      </h3>
+      <span
+        class="item"
+        [style.background]="
+          item.status === 'Đã hoàn' ? '#13a42547' : '#ff4d4f45'
+        "
+        [style.color]="item.status === 'Đã hoàn' ? '#256704' : '#7e0000'"
+        >{{ item.status }}</span
+      >
+    </nz-list-item>
+  </nz-list>
+</div>

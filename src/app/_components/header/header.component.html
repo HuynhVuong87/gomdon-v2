@@ -1,0 +1,64 @@
+<ng-container *ngIf="info">
+  <nz-page-header-extra style="margin-right: 24px;">
+    <span
+      class="is-online"
+      [title]="isOnline ? 'Có kết nối internet' : 'Không có kết nối internet'"
+    >
+      <i
+        nz-icon
+        [style.color]="isOnline ? '#4bbb13' : '#e6535b'"
+        [nzType]="isOnline ? 'check-circle' : 'minus-circle'"
+        nzTheme="fill"
+      ></i>
+      <span *ngIf="!mobile">{{
+        isOnline ? "Trực tuyến" : "Không trực tuyến"
+      }}</span>
+    </span>
+    <nz-badge
+      (click)="openSearch()"
+      style="margin-right: 10px; cursor: pointer; font-size: 18px;"
+      [nzDot]="false"
+    >
+      <i nz-icon nzType="search" nzTheme="outline"></i
+    ></nz-badge>
+    <!-- <nz-badge
+      nz-popover
+      [nzPopoverContent]="notiTemplate"
+      nzPopoverTrigger="click"
+      style="margin-right: 10px; cursor: pointer; font-size: 18px;"
+      [nzDot]="false"
+    >
+      <i nz-icon nzType="bell" nzTheme="outline"></i
+    ></nz-badge> -->
+
+    <nz-badge
+      (click)="openChat()"
+      style="margin-right: 10px; cursor: pointer; font-size: 18px;"
+      [nzDot]="false"
+    >
+      <i nz-icon nzType="message" nzTheme="outline"></i
+    ></nz-badge>
+
+    <nz-avatar
+      nzIcon="user"
+      [nzSrc]="info.photoURL"
+      style="margin-bottom: 4px;"
+    ></nz-avatar>
+    <span class="name" nz-popover [nzPopoverContent]="contentTemplate">{{
+      info.displayName
+    }}</span>
+  </nz-page-header-extra>
+</ng-container>
+
+<ng-template #contentTemplate>
+  <nz-list style="width: 150px;">
+    <nz-list-item routerLink="/me" style="cursor: pointer;">
+      <span><i nz-icon nzType="user" nzTheme="outline"></i> Trang Cá Nhân</span>
+    </nz-list-item>
+    <nz-list-item style="cursor: pointer;" (click)="signOut()">
+      <b style="color: red;">
+        <i nz-icon nzType="logout" nzTheme="outline"></i> Đăng Xuất</b
+      >
+    </nz-list-item>
+  </nz-list>
+</ng-template>

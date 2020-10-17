@@ -1,0 +1,25 @@
+<li
+  *ngFor="let m of menu"
+  nz-submenu
+  nzOpen
+  [nzTitle]="m.title"
+  [nzIcon]="m.icon"
+>
+  <ul>
+    <li *ngFor="let item of m.items" nz-menu-item nzMatchRouter>
+      <!-- <nz-badge [nzCount]="5"> -->
+      <a
+        [routerLink]="item.link"
+        [queryParams]="item.queryParams"
+        class="menu-a"
+      >
+        <i nz-icon nzType="caret-right" nzTheme="outline"></i>
+        {{ item.title }}
+        <span *ngIf="item.badge" style="float: right;"
+          ><em class="badge">{{ item.badge }}</em></span
+        ></a
+      >
+      <!-- </nz-badge> -->
+    </li>
+  </ul>
+</li>

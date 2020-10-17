@@ -1,0 +1,203 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@swimlane/ngx-datatable/index.css";
+@import "~@swimlane/ngx-datatable/themes/material.scss";
+@import "~@swimlane/ngx-datatable/assets/icons.css";
+
+$datatable-footer-cell-color: rgba(0, 0, 0, 0.54) !default;
+$datatable-footer-border-top-color: rgba(0, 0, 0, 0.12) !default;
+$datatable-pager-color: rgba(0, 0, 0, 0.54) !default;
+$datatable-pager-color-hover: rgba(0, 0, 0, 0.75) !default;
+$datatable-pager-background-hover: rgba(158, 158, 158, 0.2) !default;
+$datatable-pager-disabled-color: rgba(0, 0, 0, 0.26) !default;
+$datatable-pager-disabled-background: transparent !default;
+$datatable-pager-active-background: rgba(158, 158, 158, 0.2) !default;
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.013);
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  transition: all 0.5s ease;
+  background-color: rgba(0, 0, 0, 0.089);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #000000;
+  width: 6px;
+  transition: all 0.75s ease;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #742aceb6;
+  transition: all 0.7s ease;
+}
+
+*,
+p {
+  // font-family: "Barlow", sans-serif;
+  font-weight: 500;
+}
+
+.qs-font {
+  font-family: quicksand, sans-serif !important;
+}
+ngx-datatable.datatable-cs {
+  margin: 15px 0;
+  border-top: #eee solid 1px;
+  height: 75vh;
+
+  &.products-order {
+    height: auto !important;
+  }
+
+  datatable-header-cell,
+  datatable-body-cell {
+    padding: 3px 10px;
+    border-left: #eee solid 1px;
+    border-right: #eee solid 1px;
+  }
+
+  datatable-body-cell {
+    border-bottom: #eee solid 1px !important;
+    span {
+      color: #716684;
+    }
+  }
+
+  .datatable-header-inner {
+    position: fixed;
+    box-shadow: 0 1px 10px 1px #f0f2f5;
+    border-bottom: #bababa40 solid 1px;
+    background: #f5f5f5;
+    text-transform: uppercase;
+  }
+  .datatable-checkbox input[type="checkbox"]:checked:before {
+    border-color: #6c19f1 !important;
+    border-width: 2px;
+  }
+  .datatable-checkbox input[type="checkbox"]:before {
+    // border: 1px solid #ceabffad;
+    border-color: #ceabffad;
+    border-width: 1px;
+    border-radius: 2px;
+  }
+  .datatable-footer {
+    border-top: 1px solid $datatable-footer-border-top-color;
+    font-size: 12px;
+    font-weight: 400;
+    color: $datatable-footer-cell-color;
+
+    .page-count {
+      line-height: 50px;
+      height: 50px;
+    }
+
+    .datatable-pager {
+      li {
+        vertical-align: middle;
+
+        &.disabled a {
+          color: $datatable-pager-disabled-color !important;
+          background-color: $datatable-pager-disabled-background !important;
+        }
+
+        &.active a {
+          background-color: rgba(108, 25, 241, 0.77);
+          color: #fff;
+          font-weight: bold;
+          font-family: consolas, sans-serif;
+        }
+      }
+
+      a {
+        height: 22px;
+        min-width: 24px;
+        line-height: 22px;
+        padding: 0 6px;
+        border-radius: 3px;
+        margin: 6px 3px;
+        text-align: center;
+        vertical-align: top;
+        color: $datatable-pager-color;
+        text-decoration: none;
+        vertical-align: bottom;
+
+        &:hover {
+          color: $datatable-pager-color-hover;
+          background-color: $datatable-pager-background-hover;
+        }
+      }
+
+      .datatable-icon-left,
+      .datatable-icon-skip,
+      .datatable-icon-right,
+      .datatable-icon-prev {
+        font-size: 20px;
+        line-height: 20px;
+        padding: 0 3px;
+      }
+    }
+  }
+
+  .datatable-header-cell-template-wrap,
+  .datatable-body-cell-label {
+    text-align: center;
+  }
+
+  .align-left .datatable-body-cell-label {
+    text-align: left;
+  }
+
+  .highlight-status .datatable-body-cell-label {
+    text-transform: uppercase;
+    font-weight: 700;
+    color: rgb(20, 42, 158);
+  }
+
+  .align-right .datatable-body-cell-label {
+    text-align: right;
+  }
+  .datatable-body-cell-label {
+    margin-top: 4px;
+  }
+}
+
+span.money {
+  color: #10721d !important;
+  font-family: "Roboto Mono", monospace !important;
+}
+.logs .ant-steps-item-subtitle {
+  display: block !important;
+  margin-left: 0 !important;
+  text-transform: initial !important;
+}
+
+.logs .ant-steps-item-description {
+  color: rgba(0, 0, 0, 0.89) !important;
+  font-family: sans-serif;
+}
+
+.logs .ant-steps-item-content {
+  width: 80% !important;
+}
+.my-dialog {
+  transition: 4s ease-out;
+}
+.suggest {
+  nz-avatar {
+    border-radius: unset;
+    margin-top: 8px;
+  }
+  a.mvd {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+form {
+  .ant-form-item-label > label {
+    color: #828282 !important;
+    font-weight: normal;
+  }
+}

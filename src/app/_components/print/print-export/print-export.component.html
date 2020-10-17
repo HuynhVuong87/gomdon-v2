@@ -1,0 +1,22 @@
+<h4 style="margin-bottom: 0;">
+  Phiếu Xuất Kho - {{ date | date: "HH:mm dd/MM/yyyy" }}
+</h4>
+<div
+  *ngFor="let item of data"
+  style="padding-top: 5px; border-top: #000 dashed 1px; margin-top: 5px;"
+>
+  <b>{{ item.actual_carrier }}</b
+  >, <b>{{ item.gomdon_sells.length }}</b> ĐƠN, <br />
+  ID: {{ item.id }}<br />
+  Tạo lúc {{ item.gomdon_ctime * 1000 | date: "HH:mm dd/MM/yyyy" }}
+  <br />
+  <b>Mã Vận Đơn:</b>
+  <br />
+  <span
+    style="display: inline-block; font-size: 13px;"
+    *ngFor="let o of item.gomdon_sells; let i = index"
+  >
+    <b>{{ i + 1 }}</b
+    >. &nbsp;{{ o.shipping_traceno }}, &nbsp;
+  </span>
+</div>

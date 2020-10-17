@@ -1,0 +1,70 @@
+<ng-container *ngIf="rows; else empty">
+  <div class="content-header" nz-row nzJustify="space-between">
+    <div>
+      <h2>
+        <i nz-icon nzType="container" nzTheme="outline"></i> &nbsp; Phiếu Xuất
+        Kho Mới
+      </h2>
+      <nz-divider nzType="vertical"></nz-divider
+      ><app-action-button></app-action-button>
+    </div>
+    <div nz-col nzMd="16" nzXs="24">
+      <div nz-row nzJustify="end">
+        <nz-select
+          nzPlaceHolder="Nhà Vận Chuyển"
+          ngModel=""
+          (ngModelChange)="selectCarrier($event)"
+        >
+          <nz-option nzValue="all" nzLabel="Tất Cả Nhà Vận Chuyển"></nz-option>
+          <nz-option
+            *ngFor="let item of carriers"
+            [nzValue]="item"
+            [nzLabel]="item"
+          ></nz-option>
+        </nz-select>
+        <nz-divider [hidden]="mobile" nzType="vertical"></nz-divider>
+        <div nz-col nzMd="12" nzXs="24">
+          <app-search-bar
+            [placeHolder]="'Tìm bằng mã phiếu xuất'"
+            (onSearchEvent)="search($event)"
+          ></app-search-bar>
+          <!-- <button nz-button nzType="primary">
+                <i nz-icon nzType="plus" nzTheme="outline"></i>
+              </button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-table">
+    <ngx-datatable
+      class="datatable-cs"
+      [columnMode]="'force'"
+      [rows]="rows"
+      [columns]="cols"
+      [scrollbarV]="true"
+      [scrollbarH]="true"
+      [limit]="10"
+      [footerHeight]="50"
+      [rowHeight]="37"
+      [selected]="selected"
+      [selectionType]="'checkbox'"
+      [selectAllRowsOnPage]="false"
+      (select)="onSelect($event)"
+      [sorts]="[{ prop: 'gomdon_ctime', dir: 'desc' }]"
+    >
+    </ngx-datatable>
+  </div>
+
+  <app-print></app-print>
+</ng-container>
+<ng-template #dateView let-row="row" let-value="value" let-i="i">
+  {{ value * 1000 | date: "HH:mm - dd/MM/y" }}
+</ng-template>
+<ng-template #link let-row="row" let-value="value" let-i="i">
+  <a href="stock/export/{{ value }}" target="_blank" rel="noopener noreferrer"
+    ><i nz-icon nzType="link" nzTheme="outline"></i>&nbsp;{{ value }}
+  </a>
+</ng-template>
+<ng-template #empty>
+  <nz-empty></nz-empty>
+</ng-template>

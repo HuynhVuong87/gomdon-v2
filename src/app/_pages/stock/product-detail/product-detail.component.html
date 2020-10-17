@@ -1,0 +1,35 @@
+<div nz-row nzJustify="center">
+  <div nz-col nzSm="22" nzMd="20" nzLg="18" nzXs="24" class="container">
+    <div class="section">
+      <h3>1. Thông Tin Cơ Bản</h3>
+      <app-product-form-general></app-product-form-general>
+    </div>
+    <div class="section">
+      <h3>2. Thông Tin Bán Hàng</h3>
+      <app-product-form-sell-info></app-product-form-sell-info>
+    </div>
+    <div class="section">
+      <h3>3. Quản Lý Hình Ảnh</h3>
+      <app-product-form-images></app-product-form-images>
+    </div>
+    <div class="section">
+      <h3>4. Thông Tin Vận Chuyển</h3>
+      <app-product-form-carrier></app-product-form-carrier>
+    </div>
+    <div class="action-bar">
+      <div nz-row nzJustify="end" nzAlign="middle">
+        <button nz-button>
+          <span>Hủy</span>
+        </button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button nz-button>
+          <span>Lưu Nháp</span>
+        </button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button nz-button nzType="primary">
+          <i nz-icon nzType="save" nzTheme="outline"></i> &nbsp;<span>LƯU</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

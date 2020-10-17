@@ -1,0 +1,80 @@
+<div nz-row nzGutter="24" class="container">
+  <div nz-col nzMd="8" nzXs="24">
+    <h3>
+      <i nz-icon nzType="user-add" nzTheme="outline"></i> Thêm Nhân Viên Kho
+    </h3>
+    <nz-input-group [nzSuffix]="suffixIconSearch">
+      <input
+        type="text"
+        [(ngModel)]="emailAdd"
+        type="email"
+        nz-input
+        placeholder="Nhập email nhân viên"
+      />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <i nz-icon nzType="mail"></i>
+    </ng-template>
+
+    <div nz-row nzJustify="end" style="margin-top: 10px;">
+      <button
+        nz-button
+        nzType="primary"
+        (click)="addMember()"
+        [disabled]="emailAdd.length > 0 ? false : true"
+      >
+        <i nz-icon nzType="plus"></i>Thêm
+      </button>
+    </div>
+  </div>
+  <div
+    *ngIf="width"
+    nz-col
+    nzMd="16"
+    nzXs="24"
+    [style.overflow-x]="width < 700 ? 'scroll' : 'hidden'"
+    [style.width]="width < 700 ? width - 20 + 'px' : 'auto'"
+  >
+    <nz-table
+      #borderedTable
+      nzBordered
+      nzTitle="Danh Sách Nhân Viên"
+      [nzData]="members"
+    >
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th nzWidth="40px">Avatar</th>
+          <th>Tên Hiển Thị</th>
+          <th>Email</th>
+          <th>Thêm Lúc</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of borderedTable.data; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td nzAlign="center">
+            <img src="{{ data.photoURL }}" class="avatar" alt="" />
+          </td>
+          <td>{{ data.displayName }}</td>
+          <td>{{ data.email }}</td>
+          <td>{{ data.ctime * 1000 | date: "HH:mm - dd/MM/y" }}</td>
+          <td nzAlign="center">
+            <button
+              nz-button
+              nzType="default"
+              nzShape="circle"
+              style="color: #7d0f14b8;"
+              nz-popconfirm
+              nzPopconfirmTitle="Xóa nhân viên {{ data.displayName }} khỏi kho"
+              (nzOnConfirm)="removeMemberStock(data.email)"
+            >
+              <i nz-icon nzType="delete" nzTheme="fill"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

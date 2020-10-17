@@ -1,0 +1,51 @@
+<ng-container *ngIf="helper.isMobileScreen; else mb">
+  <nz-list>
+    <nz-list-item>
+      <span>Tiền hàng: </span>
+      <span class="money">{{ sell.buyer_paid_amount | number: "1.0-0" }}</span>
+    </nz-list-item>
+    <nz-list-item>
+      <span>Phí dịch vụ:</span>
+      <span class="money"
+        >- {{ sell.seller_service_fee | number: "1.0-0" }}</span
+      >
+    </nz-list-item>
+    <nz-list-item
+      *ngIf="sell.voucher_absorbed_by_seller && sell.voucher_price !== '0'"
+    >
+      <span>Giảm giá: </span>
+      <span class="money">- {{ sell.voucher_price | number: "1.0-0" }}</span>
+    </nz-list-item>
+    <nz-list-item>
+      <span><b>Công nợ: </b></span>
+      <span class="money">= {{ ownPrice | number: "1.0-0" }}</span>
+    </nz-list-item>
+  </nz-list>
+</ng-container>
+<ng-template #mb>
+  <nz-list>
+    <nz-list-item>
+      <div>
+        Tiền hàng:
+        <span class="money">{{
+          sell.buyer_paid_amount | number: "1.0-0"
+        }}</span>
+
+        &nbsp; <b>-</b> &nbsp; <span>Phí giao dịch: </span
+        ><span class="money">{{
+          sell.seller_service_fee | number: "1.0-0"
+        }}</span>
+        <ng-container
+          *ngIf="sell.voucher_absorbed_by_seller && sell.voucher_price !== '0'"
+        >
+          &nbsp;<b>-</b> &nbsp; <span>Giảm giá: </span
+          ><span class="money">{{ sell.voucher_price | number: "1.0-0" }}</span>
+        </ng-container>
+      </div>
+      <div>
+        <span><b>= </b>&nbsp; CÔNG NỢ: </span>&nbsp;
+        <span class="money">{{ ownPrice | number: "1.0-0" }}</span>
+      </div>
+    </nz-list-item>
+  </nz-list>
+</ng-template>

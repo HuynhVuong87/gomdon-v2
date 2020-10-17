@@ -1,0 +1,25 @@
+.tier {
+  padding-bottom: 10px;
+  .models {
+    background: #f6f6f6;
+    padding: 10px 10px !important;
+    border-radius: 3px;
+    margin-bottom: 10px;
+
+    border: #eee solid 1px;
+    // padding-bottom: 0 !important;
+    & > input,
+    nz-input-group {
+      margin-bottom: 10px;
+
+      i {
+        cursor: pointer;
+      }
+    }
+  }
+
+  i.remove-tier {
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+}

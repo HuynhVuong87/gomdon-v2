@@ -1,0 +1,53 @@
+<ng-container *ngIf="rows.length > 0; else empty">
+  <div class="content-header" nz-row nzJustify="space-between">
+    <div>
+      <h2>
+        <i nz-icon nzType="container" nzTheme="outline"></i> &nbsp; Phiếu Thu
+      </h2>
+      <nz-divider nzType="vertical"></nz-divider
+      ><app-action-button></app-action-button>
+    </div>
+  </div>
+  <div class="content-table">
+    <ngx-datatable
+      class="datatable-cs"
+      [columnMode]="'force'"
+      [rows]="rows"
+      [columns]="cols"
+      [scrollbarV]="true"
+      [scrollbarH]="true"
+      [limit]="10"
+      [footerHeight]="50"
+      [rowHeight]="37"
+      [sorts]="[{ prop: 'gomdon_ctime', dir: 'desc' }]"
+    >
+    </ngx-datatable>
+  </div>
+
+  <app-print></app-print>
+</ng-container>
+
+<ng-template #empty>
+  <h3 style="width: 100%; text-align: center;">
+    Phiếu thu là phiếu ghi nhận lại các đơn (Sàn trả, công nợ, đối soát) tại mỗi
+    lần bạn đối soát.
+  </h3>
+  <nz-empty></nz-empty>
+</ng-template>
+<ng-template
+  #linkRef
+  let-column="column"
+  let-row="row"
+  let-value="value"
+  let-i="i"
+>
+  <span
+    ><a target="_blank" href="shop/receipt/{{ value }}">{{ value }}</a></span
+  >
+</ng-template>
+<ng-template #moneyView let-row="row" let-value="value" let-i="i">
+  <span class="money">{{ value | number: "1.0-2" }}</span>
+</ng-template>
+<ng-template #dateView let-row="row" let-value="value" let-i="i">
+  <span>{{ value * 1000 | date: "dd/MM/y" }}</span>
+</ng-template>

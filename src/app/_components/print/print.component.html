@@ -1,0 +1,30 @@
+<button
+  id="printBut"
+  printTitle="MyTitle"
+  printSectionId="print-section"
+  ngxPrint
+  style="visibility: hidden;"
+>
+  test
+</button>
+
+<div id="print-section">
+  <ng-container *ngIf="dataPrint">
+    <app-print-orders-barcode
+      *ngIf="dataPrint.id === 'print-orders-barcode'"
+      [data]="dataPrint.data"
+    ></app-print-orders-barcode>
+    <app-print-orders-qrcode
+      *ngIf="dataPrint.id === 'print-orders-qr'"
+      [data]="dataPrint.data"
+    ></app-print-orders-qrcode>
+    <app-print-export
+      *ngIf="dataPrint.id === 'print-exports'"
+      [data]="dataPrint.data"
+    ></app-print-export>
+    <app-print-return-orders
+      *ngIf="dataPrint.id === 'print-return-orders'"
+      [data]="dataPrint.data"
+    ></app-print-return-orders>
+  </ng-container>
+</div>

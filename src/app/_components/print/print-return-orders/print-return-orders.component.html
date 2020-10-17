@@ -1,0 +1,18 @@
+<div>
+  {{ dateNow | date: "HH:mm dd/MM/y" }} <br />
+  <mark>{{ data[0].actual_carrier }}</mark
+  ><br />
+  KÍ TÊN:
+  <br /><br /><br /><br />
+  <nz-list>
+    <nz-list-item *ngFor="let i of data; let ind = index">
+      <span>
+        <b>{{ ind + 1 }}</b
+        >. {{ i.shipping_traceno }}
+        <span style="font-size: 12px;"
+          >| {{ i.time_return | date: "HH:mm dd/MM/yyyy" }}</span
+        >
+      </span>
+    </nz-list-item>
+  </nz-list>
+</div>

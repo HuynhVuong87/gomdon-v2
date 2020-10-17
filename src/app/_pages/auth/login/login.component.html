@@ -1,0 +1,75 @@
+<div nz-row nzJustify="space-between" nzAlign="middle" class="bg">
+  <div class="img" nz-col nzSm="12" nzXs="0">
+    <img style="width: 100%;" src="assets/login.png" alt="" />
+  </div>
+  <div class="contain" nz-col nzSm="12" nzMd="8" nzLg="5" nzXs="24">
+    <div>
+      <img class="logo" src="assets/logo.svg" alt="" />
+      <h2 style="text-align: center; color: #3d099d;">Gom Đơn 2.0</h2>
+      <p
+        class="qs-font"
+        style="text-align: center; color: rgba(67, 67, 67, 0.65);"
+      >
+        Công cụ đồng bộ, quản lý đơn hàng nhanh chóng, hiệu quả, chính xác.
+      </p>
+      <form
+        nz-form
+        [formGroup]="validateForm"
+        class="login-form"
+        (ngSubmit)="submitForm()"
+      >
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Vui lòng nhập email">
+            <nz-input-group nzPrefixIcon="mail">
+              <input
+                type="text"
+                nz-input
+                formControlName="email"
+                placeholder="Email"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Vui lòng nhập mật khẩu">
+            <nz-input-group nzPrefixIcon="lock">
+              <input
+                type="password"
+                nz-input
+                formControlName="password"
+                placeholder="Mật khẩu"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <div nz-row class="login-form-margin">
+          <div nz-col [nzSpan]="12">
+            <label nz-checkbox formControlName="remember">
+              <span>Nhớ tài khoản</span>
+            </label>
+          </div>
+          <div nz-col [nzSpan]="12">
+            <a class="login-form-forgot">Quên mật khẩu</a>
+          </div>
+        </div>
+        <button
+          nz-button
+          class="login-form-button login-form-margin"
+          [nzType]="'primary'"
+        >
+          Đăng Nhập
+          <!-- <i nz-icon nzType="login" nzTheme="outline"></i> -->
+        </button>
+        <a
+          nz-button
+          class="login-form-button login-form-margin"
+          [nzType]="'default'"
+          style="color: #4811af;"
+          (click)="authSV.googleLogin()"
+        >
+          Đăng Nhập Bằng Google +
+        </a>
+      </form>
+    </div>
+  </div>
+</div>

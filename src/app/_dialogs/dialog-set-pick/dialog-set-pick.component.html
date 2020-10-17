@@ -1,0 +1,39 @@
+<ng-container *ngIf="users.length > 0; else empty">
+  <nz-list>
+    <nz-list-item *ngFor="let item of users">
+      <div>
+        <label
+          nz-checkbox
+          [(ngModel)]="item.selected"
+          (ngModelChange)="selected()"
+          ><img
+            [src]="item.photoURL"
+            style="border-radius: 50%;"
+            width="30px"
+            alt=""
+          />&nbsp;
+          <b>{{ item.displayName }}</b>
+          <span *ngIf="item.uid === myUid">&nbsp;(Tôi)</span>
+          <br />
+          <span style="margin-left: 24px;">{{ item.email }}</span>
+        </label>
+      </div>
+      <span *ngIf="item.setPick && item.setPick.length > 0" class="thongke">
+        <nz-divider nzType="vertical"></nz-divider>
+        <b>{{ item.setPick.length }}</b> Phân loại,
+        <b>{{ helper.sum(item.setPick, "amount") }}</b> Cái.
+      </span>
+    </nz-list-item>
+  </nz-list>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="destroyModal()">
+      Hủy
+    </button>
+    <button nz-button nzType="primary" (click)="save()">
+      <i nz-icon nzType="save" nzTheme="outline"></i> LƯU
+    </button>
+  </div>
+</ng-container>
+<ng-template #empty>
+  <i nz-icon spin type="loading"></i>
+</ng-template>

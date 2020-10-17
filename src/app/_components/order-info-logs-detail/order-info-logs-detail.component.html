@@ -1,0 +1,30 @@
+<ng-container *ngIf="logs && logs.length > 0">
+  <nz-tabset>
+    <nz-tab *ngFor="let tab of logs" [nzTitle]="titleTemplate">
+      <ng-template #titleTemplate>
+        <i nz-icon [nzType]="tab.icon"></i>{{ tab.title }}
+      </ng-template>
+      <nz-steps
+        *ngIf="tab.logs.length > 0; else empty"
+        nzProgressDot
+        nzDirection="vertical"
+      >
+        <nz-step
+          class="logs"
+          *ngFor="let item of tab.logs"
+          nzStatus="finish"
+          [nzDescription]="
+            tab.id === 1
+              ? (item.content | customString: 'Sell' | uppercase)
+              : item.content
+          "
+          nzTitle="{{ item.id | date: 'HH:mm - dd/MM/y' }}"
+          nzSubtitle="{{ item.name }}"
+        ></nz-step>
+      </nz-steps>
+      <ng-template #empty>
+        <nz-empty></nz-empty>
+      </ng-template>
+    </nz-tab>
+  </nz-tabset>
+</ng-container>
